@@ -4,6 +4,10 @@ import time
 class PomodoroTimer(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
+        self.session_length = 5 # how many study intervals in session
+        self.interval_counter = 0 # counts how many study intervals have passed
+        self.study_duration = 25 # study duration in minutes
+        self.break_duration = 5 # break duration in minutes
 
     @intent_file_handler('config.set.intent')
     def handle_config_set(self, message):

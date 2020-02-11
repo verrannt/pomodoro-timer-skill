@@ -9,6 +9,37 @@ class PomodoroTimer(MycroftSkill):
         self.study_duration = 25 # study duration in minutes
         self.break_duration = 5 # break duration in minutes
 
+    # 1. The start: the user tells Mycroft to start a new pomodoro session
+    @intent_file_handler('session.start.intent')
+    def handle_session_start(self, message):
+        # 2. Start a new study timer and speak confirmation
+        self.speak_dialog('session.start')
+        self.start_study_timer()
+
+    def start_study_timer(self):
+        # 3. Sleep for the length of the study interval
+        time.sleep(60 * self.study_duration)
+        # 4. Check if end of session
+        self.interval_counter += 1
+        if self.interval_counter == self.session_length:
+            self.end_session() # if yes, end the session
+        else:
+            self.take_break() # if not, take a break
+
+    def take_break(self):
+        # 5. Communicate start of break
+        self.speak_dialog('break.start')
+        time.sleep(60 * self.break_duration) # sleep for duration of break
+        self.speak_dialog('break.end') # communicate end of break
+        self.start_study_timer() # start studying again (go back to 3.)
+
+    def end_session(self):
+        # NOTE do cleaning up here for future versions
+        self.speak_dialog('session.end')
+
+    def stop(self):
+        pass
+
     @intent_file_handler('config.set.intent')
     def handle_config_set(self, message):
         config_type = message.data.get('type')

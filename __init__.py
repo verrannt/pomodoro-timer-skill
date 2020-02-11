@@ -20,32 +20,12 @@ class PomodoroTimer(MycroftSkill):
 
     @intent_file_handler('config.get.intent')
     def handle_config_get(self, message):
-        config_type = message.data.get('type')
+        config_type = message.data.get('Options')
+        self.log.error('The function handle_config_get is not yet implemented.')
         #formatted_config_type = '{}_duration'.format(config_type)
         #duration = self.settings.get(formatted_config_type)
-        self.speak_dialog('config.get', 
-            { 'type' : config_type, 'duration' : duration})
-
-    @intent_file_handler('session.start.intent')
-    def handle_session_start(self, message):
-        self.speak_dialog('session.start')
-
-    def begin_study_break(self, message):
-        self.speak_dialog('break.start')
-
-    def end_study_break(self, message):
-        self.speak_dialog('break.end')
-
-    def handle_session_end(self, message):
-        self.speak_dialog('session.end')
-        self.end_session()
-
-    def end_session():
-        pass
-    
-    def stop():
-        self.end_session()
+        #self.speak_dialog('config.get',
+            # { 'type' : config_type, 'duration' : duration})
 
 def create_skill():
     return PomodoroTimer()
-

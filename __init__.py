@@ -9,7 +9,7 @@ class PomodoroTimer(MycroftSkill):
     def handle_config_set(self, message):
         config_type = message.data.get('type')
         duration = message.data.get('duration')
-        
+        self.log.error('The function handle_config_set is not yet implemented.')
         #if config_type is 'study':
         #    self.settings['{}_duration'.format(config_type)] = duration
         #elif config_type is 'break':

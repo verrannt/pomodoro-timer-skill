@@ -1,5 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
+from mycroft.util import play_wav
 import time
+from os.path import join, isfile, abspath, dirname
 
 class PomodoroTimer(MycroftSkill):
     def __init__(self):
@@ -8,6 +10,8 @@ class PomodoroTimer(MycroftSkill):
         self.interval_counter = 0 # counts how many study intervals have passed
         self.study_duration = 25 # study duration in minutes
         self.break_duration = 5 # break duration in minutes
+        self.break_overflow = False # whether the user takes a too-long break
+        self.sound_file = join(abspath(dirname(__file__)), 'timerBeep.wav')
 
     # 1. The start: the user tells Mycroft to start a new pomodoro session
     @intent_file_handler('session.start.intent')
@@ -21,6 +25,8 @@ class PomodoroTimer(MycroftSkill):
         time.sleep(60 * self.study_duration)
         # 4. Check if end of session
         self.interval_counter += 1
+        play_wav(self.sound_file)
+        time.sleep(3)
         if self.interval_counter == self.session_length:
             self.end_session() # if yes, end the session
         else:
@@ -30,6 +36,8 @@ class PomodoroTimer(MycroftSkill):
         # 5. Communicate start of break
         self.speak_dialog('break.start')
         time.sleep(60 * self.break_duration) # sleep for duration of break
+        play_wav(self.sound_file)
+        time.sleep(3)
         self.speak_dialog('break.end') # communicate end of break
         self.start_study_timer() # start studying again (go back to 3.)
 

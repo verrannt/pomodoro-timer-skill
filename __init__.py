@@ -1,5 +1,5 @@
 from mycroft import MycroftSkill, intent_file_handler
-
+import time
 
 class PomodoroTimer(MycroftSkill):
     def __init__(self):

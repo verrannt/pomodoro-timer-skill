@@ -51,10 +51,13 @@ class PomodoroTimer(MycroftSkill):
         self.is_running = False
         self.speak_dialog('session.end')
 
-    @intent_file_handler('session.end.intent')
+    @intent_file_handler('session.end.enforce.intent')
     def handle_session_end(self, message):
-        self.is_running = False
-        self.speak_dialog('session.end.enforced')
+        if self.is_running:
+            self.is_running = False
+            self.speak_dialog('session.end.enforce')
+        else:
+            self.speak_dialog('session.end.enforce.fail')
 
     @intent_file_handler('session.left.info.intent')
     def handle_intervals_left_info(self, message):

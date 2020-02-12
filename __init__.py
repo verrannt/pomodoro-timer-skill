@@ -45,6 +45,10 @@ class PomodoroTimer(MycroftSkill):
         # NOTE do cleaning up here for future versions
         self.speak_dialog('session.end')
 
+    @intent_file_handler('session.left.info.intent')
+    def handle_intervals_left_info(self, message):
+        amount = self.session_length - self.interval_counter
+        self.speak_dialog('session.left.info', {'amount':amount})
     def stop(self):
         pass
 

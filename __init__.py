@@ -12,13 +12,18 @@ class PomodoroTimer(MycroftSkill):
         self.break_duration = 5 # break duration in minutes
         self.break_overflow = False # whether the user takes a too-long break
         self.sound_file = join(abspath(dirname(__file__)), 'timerBeep.wav')
+        self.is_running = False
 
     # 1. The start: the user tells Mycroft to start a new pomodoro session
     @intent_file_handler('session.start.intent')
     def handle_session_start(self, message):
         # 2. Start a new study timer and speak confirmation
-        self.speak_dialog('session.start')
-        self.start_study_timer()
+        if self.is_running:
+            self.speak_dialog('session.already.running')
+        else:
+            self.is_running = True
+            self.speak_dialog('session.start')
+            self.start_study_timer()
 
     def start_study_timer(self):
         # 3. Sleep for the length of the study interval
@@ -43,6 +48,7 @@ class PomodoroTimer(MycroftSkill):
 
     def end_session(self):
         # NOTE do cleaning up here for future versions
+        self.is_running = False
         self.speak_dialog('session.end')
 
     @intent_file_handler('session.end.intent')
@@ -54,8 +60,9 @@ class PomodoroTimer(MycroftSkill):
     def handle_intervals_left_info(self, message):
         amount = self.session_length - self.interval_counter
         self.speak_dialog('session.left.info', {'amount':amount})
+
     def stop(self):
-        pass
+        self.is_running = False
 
     @intent_file_handler('config.set.intent')
     def handle_config_set(self, message):

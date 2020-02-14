@@ -32,7 +32,7 @@ class PomodoroTimer(MycroftSkill):
         self.interval_counter += 1
         play_wav(self.sound_file)
         time.sleep(3)
-        if self.interval_counter == self.session_length:
+        if self.interval_counter <= self.session_length:
             self.end_session() # if yes, end the session
         else:
             self.take_break() # if not, take a break

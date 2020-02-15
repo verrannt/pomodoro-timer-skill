@@ -61,8 +61,13 @@ class PomodoroTimer(MycroftSkill):
 
     @intent_file_handler('session.left.info.intent')
     def handle_intervals_left_info(self, message):
-        amount = self.session_length - self.interval_counter
-        self.speak_dialog('session.left.info', {'amount':amount})
+        # Check if there is even a session running, else it doesn't make sense
+        # to speak information about it.
+        if self.is_running:
+            amount = self.session_length - self.interval_counter
+            self.speak_dialog('session.left.info', {'amount':amount})
+        else:
+            self.speak_dialog('session.left.fail')
 
     def stop(self):
         self.is_running = False

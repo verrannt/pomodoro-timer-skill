@@ -47,7 +47,6 @@ class PomodoroTimer(MycroftSkill):
         self.start_study_timer() # start studying again (go back to 3.)
 
     def end_session(self):
-        # NOTE do cleaning up here for future versions
         self.is_running = False
         self.speak_dialog('session.end')
 

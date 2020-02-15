@@ -11,7 +11,7 @@ class PomodoroTimer(MycroftSkill):
         self.study_duration = 25 # study duration in minutes
         self.break_duration = 5 # break duration in minutes
         self.break_overflow = False # whether the user takes a too-long break
-        self.sound_file = join(abspath(dirname(__file__)), 'timerBeep.wav')
+        self.sound_file = join(abspath(dirname(__file__)), 'time-is-now.mp3')
         self.is_running = False
 
     # 1. The start: the user tells Mycroft to start a new pomodoro session

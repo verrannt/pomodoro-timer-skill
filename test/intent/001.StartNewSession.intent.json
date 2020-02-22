@@ -1,0 +1,5 @@
+{
+  "utterance": "start a pomodoro session",
+  "intent_type": "session.start.intent",
+  "expected_dialog": "session.start",
+}

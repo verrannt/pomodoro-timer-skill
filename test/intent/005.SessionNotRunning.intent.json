@@ -1,0 +1,5 @@
+{
+  "utterance": "end the current pomodoro session",
+  "intent_type": "session.end.enforce.intent",
+  "expected_dialog": "session.not.running",
+}

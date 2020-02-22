@@ -1,0 +1,5 @@
+{
+  "utterance": "how many intervals are left in this pomodoro session",
+  "intent_type": "session.left.info.intent",
+  "expected_dialog": "session.left.info",
+}
